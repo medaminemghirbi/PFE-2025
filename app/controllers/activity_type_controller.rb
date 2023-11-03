@@ -1,0 +1,2 @@
+class ActivityTypeController < ApplicationController
+end

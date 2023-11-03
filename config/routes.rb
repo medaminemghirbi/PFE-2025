@@ -1,6 +1,17 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
+root to: "static#home"
+  namespace :api do
+    namespace :v1 do
+      namespace :web do
+        resources :sessions, only: [:create]
+        resources :registrations, only: [:create] do
+          member do
+            get :confirm_email
+          end
+        end
+        delete :logout, to: "sessions#logout"
+        get :logged_in, to: "sessions#logged_in"
+      end
+    end
+  end
 end

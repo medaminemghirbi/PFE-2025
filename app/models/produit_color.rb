@@ -1,0 +1,2 @@
+class ProduitColor < ApplicationRecord
+end

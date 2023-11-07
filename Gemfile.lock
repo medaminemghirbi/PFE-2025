@@ -54,6 +54,8 @@ GEM
     activerecord (7.0.8)
       activemodel (= 7.0.8)
       activesupport (= 7.0.8)
+    activerecord-import (1.5.0)
+      activerecord (>= 4.2)
     activestorage (7.0.8)
       actionpack (= 7.0.8)
       activejob (= 7.0.8)
@@ -69,6 +71,8 @@ GEM
     bcrypt (3.1.19)
     bootsnap (1.17.0)
       msgpack (~> 1.2)
+    bugsnag (6.26.0)
+      concurrent-ruby (~> 1.0)
     builder (3.2.4)
     byebug (11.1.3)
     concurrent-ruby (1.2.2)
@@ -170,8 +174,10 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  activerecord-import
   bcrypt (~> 3.1.7)
   bootsnap
+  bugsnag (~> 6.26)
   byebug (~> 11.1, >= 11.1.3)
   debug
   jwt

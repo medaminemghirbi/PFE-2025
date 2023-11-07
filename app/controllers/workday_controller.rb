@@ -1,2 +1,0 @@
-class WorkdayController < ApplicationController
-end

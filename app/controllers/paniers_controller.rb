@@ -1,0 +1,2 @@
+class PaniersController < ApplicationController
+end

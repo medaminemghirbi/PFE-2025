@@ -1,2 +1,0 @@
-class Payement < ApplicationRecord
-end

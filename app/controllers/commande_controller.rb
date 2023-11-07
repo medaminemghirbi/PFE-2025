@@ -1,2 +1,0 @@
-class CommandeController < ApplicationController
-end

@@ -1,2 +1,0 @@
-class Absence < ApplicationRecord
-end

@@ -1,2 +1,0 @@
-class AbsenceTypeController < ApplicationController
-end

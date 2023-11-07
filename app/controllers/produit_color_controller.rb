@@ -1,2 +1,0 @@
-class ProduitColorController < ApplicationController
-end

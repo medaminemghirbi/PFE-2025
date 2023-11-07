@@ -1,2 +1,0 @@
-class PanierController < ApplicationController
-end

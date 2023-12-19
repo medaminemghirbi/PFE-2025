@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_07_101611) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_14_092410) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "addresses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "delegation_id"
+    t.integer "code_postal"
+    t.string "street"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["delegation_id"], name: "index_addresses_on_delegation_id"
+  end
 
   create_table "categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -34,7 +43,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_07_101611) do
 
   create_table "delegations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
-    t.string "value"
     t.uuid "municipalitie_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -48,7 +56,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_07_101611) do
 
   create_table "municipalities", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
-    t.string "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -90,5 +97,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_07_101611) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "addresses", "delegations"
   add_foreign_key "delegations", "municipalities", column: "municipalitie_id"
 end

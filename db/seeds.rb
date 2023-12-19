@@ -1,26 +1,45 @@
 require 'json'
 require 'activerecord-import/base'
+
 puts "Seeding"
 
-data_address = JSON.parse(File.read('./db/seed_data/adress_location.json'))
+data_address = JSON.parse(File.read('./db/seed_data/data_location.json'))
 data_colors = JSON.parse(File.read('./db/seed_data/color_name.json'))
 
 # Seed locations
-locations = data_address.map do |location_data|
-  Municipalitie.new(name: location_data["Name"], value: location_data["Value"])
-end
-
-Municipalitie.import locations
-
-# Seed delegations
-delegations = []
-data_address.each_with_index do |location_data, index|
-  location_data["Delegations"].each do |delegation_data|
-    delegations << Delegation.new(name: delegation_data["Name"], value: delegation_data["Value"], municipalitie_id: locations[index].id)
+locations = {}
+data_address.each do |location_data|
+  name = location_data["Name"]
+  unless locations[name]
+    locations[name] = Municipalitie.new(name: name)
   end
 end
 
-Delegation.import delegations
+# Output the names of municipalities being created
+puts "Municipalities being created:"
+puts locations.keys
+
+# Import unique Municipalities
+Municipalitie.import locations.values
+
+# Seed delegations and addresses
+data_address.each do |location_data|
+  location_name = location_data["Name"]
+  location = locations[location_name]
+
+  location_data["Delegations"].each do |delegation_name, delegation_data|
+    delegation = Delegation.new(name: delegation_name, municipalitie_id: location.id)
+    delegation.save!
+
+    delegation_data["Cities"].each do |city_data|
+      Address.create!(
+        street: city_data["street"],
+        code_postal: city_data["code_postal"],
+        delegation_id: delegation.id
+      )
+    end
+  end
+end
 
 # Seed colors
 colors = data_colors.map do |color_data|
@@ -30,5 +49,3 @@ end
 Color.import colors
 
 puts "Seeding done"
-
-

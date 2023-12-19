@@ -10,5 +10,5 @@ Rails.application.routes.draw do
   get :municipalities, to: "municipalities#get_all_municipalities"
   get :colors, to: "colors#get_all_colors"
   get 'delegations/:municipalitie_id', to: 'delegations#get_Delegation_by_Municipalities'
-
+  get 'address/:delegation_id', to: 'addresses#get_Address_by_Delegation'
 end
